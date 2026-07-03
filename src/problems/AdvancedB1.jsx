@@ -63,6 +63,13 @@ const toSvg = (p3) => {
   return { x: PAD + p.x * SCALE, y: PAD + (24 - p.y) * SCALE }
 }
 
+const SS = 4.2, SPD = 16
+const toStatic = (p3) => {
+  const p = project(p3)
+  return { x: SPD + p.x * SS, y: SPD + (24 - p.y) * SS }
+}
+const SW = SPD * 2 + 24 * SS, SH = SPD * 2 + 24 * SS
+
 export default function AdvancedB1() {
   const { t, setT, playing, setPlaying, rate, setRate } = useAnimatedTime(T_MAX, { loop: true })
   const P = useMemo(() => pointAtDistance3D(P_PATH, SPEED * t, true), [t])
@@ -71,6 +78,7 @@ export default function AdvancedB1() {
 
   const corners = { A3, B3, C3, D3, E3, F3, G3, H3 }
   const s = Object.fromEntries(Object.entries(corners).map(([k, v]) => [k, toSvg(v)]))
+  const g = Object.fromEntries(Object.entries(corners).map(([k, v]) => [k, toStatic(v)]))
   const sP = toSvg(P), sQ = toSvg(Q)
   const width = PAD * 2 + 24 * SCALE
   const height = PAD * 2 + 24 * SCALE
@@ -78,22 +86,40 @@ export default function AdvancedB1() {
   const edge = (p1, p2, opts = {}) => (
     <line x1={s[p1].x} y1={s[p1].y} x2={s[p2].x} y2={s[p2].y} stroke="#333" strokeWidth="1.5" {...opts} />
   )
+  const gEdge = (p1, p2, opts = {}) => (
+    <line x1={g[p1].x} y1={g[p1].y} x2={g[p2].x} y2={g[p2].y} stroke="#333" strokeWidth="1.2" {...opts} />
+  )
 
   return (
     <div className="problem">
       <h2>応用問題B-1　直方体の面上を動く2点（立体図形）</h2>
       <div className="statement">
-        <p className="setup">
-          右の図は，ＡＤ＝ＤＨ＝16cm，ＧＨ＝12cmの直方体ＡＢＣＤ－ＥＦＧＨで，ＡＦ＝20cmです。点Ｐと点Ｑが同時に
-          出発して，どちらも秒速2cmの速さで，点Ｐは長方形ＡＤＧＦの周上を，点Ｑは三角形ＣＤＧの周上を次のように動きます。
-        </p>
-        <p style={{ margin: '0 0 10px 0' }}>
-          点Ｐ：Ａ→Ｄ→Ｇ→Ｆ→Ａ→Ｄ→Ｇ→……　／　点Ｑ：Ｇ→Ｄ→Ｃ→Ｇ→Ｄ→……
-        </p>
-        <ol className="question-list">
-          <li>点Ｐと点Ｑがはじめて重なるのは，2点が出発してから何秒後ですか。</li>
-          <li>点Ｐと点Ｑが4回目に重なるのは，2点が出発してから何秒後ですか。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              右の図は，ＡＤ＝ＤＨ＝16cm，ＧＨ＝12cmの直方体ＡＢＣＤ－ＥＦＧＨで，ＡＦ＝20cmです。点Ｐと点Ｑが同時に
+              出発して，どちらも秒速2cmの速さで，点Ｐは長方形ＡＤＧＦの周上を，点Ｑは三角形ＣＤＧの周上を次のように動きます。
+            </p>
+            <p style={{ margin: '0 0 10px 0' }}>
+              点Ｐ：Ａ→Ｄ→Ｇ→Ｆ→Ａ→Ｄ→Ｇ→……　／　点Ｑ：Ｇ→Ｄ→Ｃ→Ｇ→Ｄ→……
+            </p>
+            <ol className="question-list">
+              <li>点Ｐと点Ｑがはじめて重なるのは，2点が出発してから何秒後ですか。</li>
+              <li>点Ｐと点Ｑが4回目に重なるのは，2点が出発してから何秒後ですか。</li>
+            </ol>
+          </div>
+          <svg className="statement-figure" width={SW} height={SH}>
+            {gEdge('A3', 'B3')}{gEdge('B3', 'C3')}{gEdge('C3', 'D3')}{gEdge('D3', 'A3')}
+            {gEdge('E3', 'F3')}{gEdge('F3', 'G3')}{gEdge('G3', 'H3')}{gEdge('H3', 'E3')}
+            {gEdge('A3', 'E3', { strokeDasharray: '3 2' })}
+            {gEdge('B3', 'F3')}
+            {gEdge('C3', 'G3')}
+            {gEdge('D3', 'H3', { strokeDasharray: '3 2' })}
+            {Object.entries(g).map(([k, v]) => (
+              <text key={k} x={v.x + 4} y={v.y - 3} fontSize="10">{k[0]}</text>
+            ))}
+          </svg>
+        </div>
       </div>
       <div className="stage">
         <svg width={width} height={height}>

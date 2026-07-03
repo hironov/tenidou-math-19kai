@@ -16,6 +16,11 @@ const T_MAX = 24
 const SCALE = 13, PAD = 46, MATH_H = 10
 const toSvg = (p) => ({ x: PAD + p.x * SCALE, y: PAD + (MATH_H - p.y) * SCALE })
 
+const SS = 6, SPD = 18
+const toStatic = (p) => ({ x: SPD + p.x * SS, y: SPD + (MATH_H - p.y) * SS })
+const gA = toStatic(A), gD = toStatic(D), gB = toStatic(B), gC = toStatic(C)
+const SW = SPD * 2 + 18 * SS, SH = SPD * 2 + 10 * SS
+
 export default function Practice4() {
   const { t, setT, playing, setPlaying } = useAnimatedTime(T_MAX)
   const P = useMemo(() => pointAtDistance([A, D, A], P_SPEED * t, true), [t])
@@ -32,14 +37,27 @@ export default function Practice4() {
     <div className="problem">
       <h2>練習問題4　台形の辺上を往復する2点と面積の2等分</h2>
       <div className="statement">
-        <p className="setup">
-          右の図の四角形ＡＢＣＤは，辺ＡＤと辺ＢＣが平行な台形です。点ＰはＡを出発して，秒速1cmで辺ＡＤ上を往復し続けます。
-          点ＱはＢを出発して，秒速2cmで辺ＢＣ上を往復し続けます。いま，点Ｐと点Ｑが同時に出発しました。これについて，次の問いに答えなさい。
-        </p>
-        <ol className="question-list">
-          <li>直線ＰＱがはじめて四角形ＡＢＣＤの面積を2等分するのは，2点が出発してから何秒後ですか。</li>
-          <li>直線ＰＱが2回目に四角形ＡＢＣＤの面積を2等分するのは，2点が出発してから何秒後ですか。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              右の図の四角形ＡＢＣＤは，辺ＡＤと辺ＢＣが平行な台形です。点ＰはＡを出発して，秒速1cmで辺ＡＤ上を往復し続けます。
+              点ＱはＢを出発して，秒速2cmで辺ＢＣ上を往復し続けます。いま，点Ｐと点Ｑが同時に出発しました。これについて，次の問いに答えなさい。
+            </p>
+            <ol className="question-list">
+              <li>直線ＰＱがはじめて四角形ＡＢＣＤの面積を2等分するのは，2点が出発してから何秒後ですか。</li>
+              <li>直線ＰＱが2回目に四角形ＡＢＣＤの面積を2等分するのは，2点が出発してから何秒後ですか。</li>
+            </ol>
+          </div>
+          <svg className="statement-figure" width={SW} height={SH}>
+            <polygon points={`${gA.x},${gA.y} ${gD.x},${gD.y} ${gC.x},${gC.y} ${gB.x},${gB.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+            <text x={gA.x - 12} y={gA.y - 4} fontSize="11">A</text>
+            <text x={gD.x + 4} y={gD.y - 4} fontSize="11">D</text>
+            <text x={gB.x - 12} y={gB.y + 14} fontSize="11">B</text>
+            <text x={gC.x + 4} y={gC.y + 14} fontSize="11">C</text>
+            <text x={(gA.x + gD.x) / 2 - 8} y={gA.y - 8} fontSize="10">12cm</text>
+            <text x={(gB.x + gC.x) / 2 - 8} y={gB.y + 18} fontSize="10">18cm</text>
+          </svg>
+        </div>
       </div>
       <div className="stage">
         <svg width={width} height={height}>

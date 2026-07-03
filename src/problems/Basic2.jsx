@@ -13,6 +13,11 @@ const T_MAX = 30
 const PAD = 40
 const toSvg = (p) => ({ x: PAD + R + p.x, y: PAD + R - p.y })
 
+const STATIC_R = 34
+const STATIC_PAD = 16
+const toStaticC = (p) => ({ x: STATIC_PAD + STATIC_R + p.x, y: STATIC_PAD + STATIC_R - p.y })
+const STATIC_SIZE = STATIC_PAD * 2 + STATIC_R * 2
+
 export default function Basic2() {
   const { t, setT, playing, setPlaying } = useAnimatedTime(T_MAX, { loop: true })
   const A = useMemo(() => pointOnCircle(O, R, START_ANGLE), [])
@@ -24,18 +29,32 @@ export default function Basic2() {
   const size = PAD * 2 + R * 2
   const meeting = Math.hypot(P.x - Q.x, P.y - Q.y) < 1.5
 
+  const gO = toStaticC(O)
+  const gA = toStaticC(pointOnCircle(O, STATIC_R, START_ANGLE))
+
   return (
     <div className="problem">
       <h2>基本問題2　円周上を同じ向きにまわる2点</h2>
       <div className="statement">
-        <p className="setup">
-          右の図のような，Ｏを中心とする円の周上を，2点Ｐ，ＱがＡを同時に出発して，それぞれ一定の速さで矢印の方向に
-          （同じ向きに）まわります。1周するのにかかる時間は，点Ｐは18秒，点Ｑは72秒です。これについて，次の問いに答えなさい。
-        </p>
-        <ol className="question-list">
-          <li>点Ｐ，点Ｑは，Ｏを中心としてそれぞれ毎秒何度の割合で回転しますか。</li>
-          <li>出発した後，点Ｐと点Ｑがはじめて重なるのは，2点が出発してから何秒後ですか。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              右の図のような，Ｏを中心とする円の周上を，2点Ｐ，ＱがＡを同時に出発して，それぞれ一定の速さで矢印の方向に
+              （同じ向きに）まわります。1周するのにかかる時間は，点Ｐは18秒，点Ｑは72秒です。これについて，次の問いに答えなさい。
+            </p>
+            <ol className="question-list">
+              <li>点Ｐ，点Ｑは，Ｏを中心としてそれぞれ毎秒何度の割合で回転しますか。</li>
+              <li>出発した後，点Ｐと点Ｑがはじめて重なるのは，2点が出発してから何秒後ですか。</li>
+            </ol>
+          </div>
+          <svg className="statement-figure" width={STATIC_SIZE} height={STATIC_SIZE}>
+            <circle cx={gO.x} cy={gO.y} r={STATIC_R} fill="none" stroke="#333" strokeWidth="1.5" />
+            <circle cx={gO.x} cy={gO.y} r={2} fill="#333" />
+            <circle cx={gA.x} cy={gA.y} r={3.5} fill="#805ad5" />
+            <text x={gO.x + 4} y={gO.y + 12} fontSize="10">O</text>
+            <text x={gA.x + 5} y={gA.y - 5} fontSize="11" fill="#805ad5">A</text>
+          </svg>
+        </div>
       </div>
       <div className="stage">
         <svg width={size} height={size}>

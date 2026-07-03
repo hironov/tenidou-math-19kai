@@ -19,6 +19,13 @@ const PAD = 46
 const MATH_H = 15
 const toSvg = (p) => ({ x: PAD + p.x * SCALE, y: PAD + (MATH_H - p.y) * SCALE })
 
+const STATIC_SCALE = 7
+const STATIC_PAD = 20
+const toStatic = (p) => ({ x: STATIC_PAD + p.x * STATIC_SCALE, y: STATIC_PAD + (MATH_H - p.y) * STATIC_SCALE })
+const gA = toStatic(A), gB = toStatic(B), gC = toStatic(C), gD = toStatic(D)
+const STATIC_W = STATIC_PAD * 2 + 15 * STATIC_SCALE
+const STATIC_H = STATIC_PAD * 2 + 15 * STATIC_SCALE
+
 export default function Example2() {
   const { t, setT, playing, setPlaying, rate, setRate } = useAnimatedTime(T_MAX, { loop: true, initialRate: 1 })
   const P = useMemo(() => pointAtDistance(P_PATH, P_SPEED * t, true), [t])
@@ -38,15 +45,29 @@ export default function Example2() {
     <div className="problem">
       <h2>例題2　正方形の辺上を動く2点と平行になる時間</h2>
       <div className="statement">
-        <p className="setup">
-          右の図のような正方形ＡＢＣＤがあります。点ＰはＡを出発して秒速5cmで，点ＱはＣを出発して秒速3cmで，
-          それぞれ矢印の方向に辺上をまわり続けます。点Ｐと点Ｑが同時に出発するとき，
-        </p>
-        <ol className="question-list">
-          <li>直線ＰＱがはじめて辺ＡＤと平行になるのは，2点が出発してから何秒後ですか。</li>
-          <li>点Ｐと点ＱがはじめてＤを同時に通過するのは，2点が出発してから何秒後ですか。</li>
-          <li>点Ｐと点Ｑが3回目にＤを同時に通過するのは，2点が出発してから何秒後ですか。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              右の図のような正方形ＡＢＣＤがあります。点ＰはＡを出発して秒速5cmで，点ＱはＣを出発して秒速3cmで，
+              それぞれ矢印の方向に辺上をまわり続けます。点Ｐと点Ｑが同時に出発するとき，
+            </p>
+            <ol className="question-list">
+              <li>直線ＰＱがはじめて辺ＡＤと平行になるのは，2点が出発してから何秒後ですか。</li>
+              <li>点Ｐと点ＱがはじめてＤを同時に通過するのは，2点が出発してから何秒後ですか。</li>
+              <li>点Ｐと点Ｑが3回目にＤを同時に通過するのは，2点が出発してから何秒後ですか。</li>
+            </ol>
+          </div>
+          <svg className="statement-figure" width={STATIC_W} height={STATIC_H}>
+            <polygon points={`${gA.x},${gA.y} ${gB.x},${gB.y} ${gC.x},${gC.y} ${gD.x},${gD.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+            <text x={gA.x - 12} y={gA.y - 4} fontSize="11">A</text>
+            <text x={gB.x - 12} y={gB.y + 12} fontSize="11">B</text>
+            <text x={gC.x + 4} y={gC.y + 12} fontSize="11">C</text>
+            <text x={gD.x + 4} y={gD.y - 4} fontSize="11">D</text>
+            <text x={(gA.x + gD.x) / 2 - 8} y={gA.y - 8} fontSize="10">15cm</text>
+            <text x={gA.x + 4} y={gA.y + 14} fontSize="12" fill="#3182ce">↓P</text>
+            <text x={gC.x - 16} y={gC.y - 6} fontSize="12" fill="#dd6b20">↑Q</text>
+          </svg>
+        </div>
       </div>
 
       <div className="stage">

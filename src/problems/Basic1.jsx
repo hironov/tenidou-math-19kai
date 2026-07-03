@@ -28,6 +28,16 @@ const toSvg1 = (p) => ({ x: PAD1 + p.x * SCALE1, y: PAD1 + (MATH_H1 - p.y) * SCA
 const SCALE2 = 13, PAD2 = 40, MATH_H2 = 10
 const toSvg2 = (p) => ({ x: PAD2 + p.x * SCALE2, y: PAD2 + (MATH_H2 - p.y) * SCALE2 })
 
+const SS1 = 6, SP1 = 18
+const toStatic1 = (p) => ({ x: SP1 + p.x * SS1, y: SP1 + (MATH_H1 - p.y) * SS1 })
+const g1A = toStatic1(A1), g1B = toStatic1(B1), g1C = toStatic1(C1)
+const SW1 = SP1 * 2 + 10 * SS1, SH1 = SP1 * 2 + 20 * SS1
+
+const SS2 = 6, SP2 = 18
+const toStatic2 = (p) => ({ x: SP2 + p.x * SS2, y: SP2 + (MATH_H2 - p.y) * SS2 })
+const g2A = toStatic2(A2), g2B = toStatic2(B2), g2C = toStatic2(C2), g2D = toStatic2(D2)
+const SW2 = SP2 * 2 + 15 * SS2, SH2 = SP2 * 2 + 10 * SS2
+
 export default function Basic1() {
   const anim1 = useAnimatedTime(T_MAX1)
   const P1 = useMemo(() => pointAtDistance(PATH1, SPEED1 * anim1.t, false), [anim1.t])
@@ -53,15 +63,27 @@ export default function Basic1() {
 
       <h3>(1) 直角三角形の辺上を動く点と面積</h3>
       <div className="statement">
-        <p className="setup">
-          右の図のような直角三角形ＡＢＣがあります。点ＰはＢを出発して，秒速2cmで辺上をＢ→Ａ→Ｃの順に動きます。
-        </p>
-        <ol className="question-list">
-          <li>点Ｐが出発してから3秒後の三角形ＰＢＣの面積は何cm²ですか。</li>
-          <li>点Ｐが出発してから13秒後の三角形ＰＢＣの面積は何cm²ですか。</li>
-          <li>三角形ＰＢＣの面積がはじめて80cm²になるのは，点Ｐが出発してから何秒後ですか。</li>
-          <li>三角形ＰＢＣの面積が2回目に80cm²になるのは，点Ｐが出発してから何秒後ですか。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              右の図のような直角三角形ＡＢＣがあります。点ＰはＢを出発して，秒速2cmで辺上をＢ→Ａ→Ｃの順に動きます。
+            </p>
+            <ol className="question-list">
+              <li>点Ｐが出発してから3秒後の三角形ＰＢＣの面積は何cm²ですか。</li>
+              <li>点Ｐが出発してから13秒後の三角形ＰＢＣの面積は何cm²ですか。</li>
+              <li>三角形ＰＢＣの面積がはじめて80cm²になるのは，点Ｐが出発してから何秒後ですか。</li>
+              <li>三角形ＰＢＣの面積が2回目に80cm²になるのは，点Ｐが出発してから何秒後ですか。</li>
+            </ol>
+          </div>
+          <svg className="statement-figure" width={SW1} height={SH1}>
+            <polygon points={`${g1B.x},${g1B.y} ${g1A.x},${g1A.y} ${g1C.x},${g1C.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+            <text x={g1A.x + 4} y={g1A.y - 4} fontSize="11">A</text>
+            <text x={g1B.x - 12} y={g1B.y + 4} fontSize="11">B</text>
+            <text x={g1C.x + 4} y={g1C.y + 12} fontSize="11">C</text>
+            <text x={(g1A.x + g1B.x) / 2 - 22} y={(g1A.y + g1B.y) / 2} fontSize="10">20cm</text>
+            <text x={(g1A.x + g1C.x) / 2 - 4} y={g1A.y - 8} fontSize="10">10cm</text>
+          </svg>
+        </div>
       </div>
       <div className="stage">
         <svg width={w1} height={h1}>
@@ -96,14 +118,27 @@ export default function Basic1() {
 
       <h3>(2) 長方形の辺上をまわる2点が出会う時間</h3>
       <div className="statement">
-        <p className="setup">
-          右の図のような長方形ＡＢＣＤがあります。点ＰはＢを出発して秒速3cmで，点ＱはＣを出発して秒速2cmで，
-          それぞれ矢印の方向に辺上をまわり続けます。
-        </p>
-        <ol className="question-list">
-          <li>点Ｐと点Ｑがはじめて重なるのは，2点が出発してから何秒後ですか。また，その場所は最も近い頂点から何cmはなれたところですか。</li>
-          <li>点Ｐと点Ｑが2回目に重なるのは，2点が出発してから何秒後ですか。また，その場所は最も近い頂点から何cmはなれたところですか。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              右の図のような長方形ＡＢＣＤがあります。点ＰはＢを出発して秒速3cmで，点ＱはＣを出発して秒速2cmで，
+              それぞれ矢印の方向に辺上をまわり続けます。
+            </p>
+            <ol className="question-list">
+              <li>点Ｐと点Ｑがはじめて重なるのは，2点が出発してから何秒後ですか。また，その場所は最も近い頂点から何cmはなれたところですか。</li>
+              <li>点Ｐと点Ｑが2回目に重なるのは，2点が出発してから何秒後ですか。また，その場所は最も近い頂点から何cmはなれたところですか。</li>
+            </ol>
+          </div>
+          <svg className="statement-figure" width={SW2} height={SH2}>
+            <polygon points={`${g2A.x},${g2A.y} ${g2B.x},${g2B.y} ${g2C.x},${g2C.y} ${g2D.x},${g2D.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+            <text x={g2A.x - 12} y={g2A.y - 4} fontSize="11">A</text>
+            <text x={g2B.x - 12} y={g2B.y + 12} fontSize="11">B</text>
+            <text x={g2C.x + 4} y={g2C.y + 12} fontSize="11">C</text>
+            <text x={g2D.x + 4} y={g2D.y - 4} fontSize="11">D</text>
+            <text x={(g2A.x + g2D.x) / 2 - 8} y={g2A.y - 8} fontSize="10">15cm</text>
+            <text x={g2A.x - 30} y={(g2A.y + g2B.y) / 2} fontSize="10">10cm</text>
+          </svg>
+        </div>
       </div>
       <div className="stage">
         <svg width={w2} height={h2}>

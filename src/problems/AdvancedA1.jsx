@@ -22,6 +22,12 @@ const T_MAX = 60
 const SCALE = 9, PAD = 40, MATH_H = 15
 const toSvg = (p) => ({ x: PAD + p.x * SCALE, y: PAD + (MATH_H - p.y) * SCALE })
 
+const SS = 4.5, SPD = 16
+const toStatic = (p) => ({ x: SPD + p.x * SS, y: SPD + (MATH_H - p.y) * SS })
+const gB = toStatic(B), gC = toStatic(C), gD = toStatic(D), gA = toStatic(A)
+const gF = toStatic(F), gG = toStatic(G), gE = toStatic(E)
+const SW = SPD * 2 + 27 * SS, SH = SPD * 2 + 15 * SS
+
 export default function AdvancedA1() {
   const { t, setT, playing, setPlaying, rate, setRate } = useAnimatedTime(T_MAX, { loop: true })
   const P = useMemo(() => pointAtDistance(P_PATH, P_SPEED * t, true), [t])
@@ -37,15 +43,32 @@ export default function AdvancedA1() {
     <div className="problem">
       <h2>応用問題A-1　2つの正方形を組み合わせた図形上の2点</h2>
       <div className="statement">
-        <p className="setup">
-          右の図のような，正方形を2つ組み合わせた図形があります。点ＰはＢを出発して秒速4cmで，正方形ＡＢＣＤの辺上を
-          Ｂ→Ａ→Ｄ→Ｃ→Ｂ→Ａ→……の順にまわり続けます。点ＱはＧを出発して秒速3cmで正方形ＥＣＦＧの辺上を
-          Ｇ→Ｆ→Ｃ→Ｅ→Ｇ→Ｆ→……の順にまわり続けます。いま，点Ｐと点Ｑが同時に出発しました。これについて，次の問いに答えなさい。
-        </p>
-        <ol className="question-list">
-          <li>点Ｐと点Ｑが1回目，2回目に重なるのは，それぞれ2点が出発してから何秒後ですか。</li>
-          <li>2点が出発してから5分後までの間に，点Ｐと点Ｑは何回重なりますか。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              右の図のような，正方形を2つ組み合わせた図形があります。点ＰはＢを出発して秒速4cmで，正方形ＡＢＣＤの辺上を
+              Ｂ→Ａ→Ｄ→Ｃ→Ｂ→Ａ→……の順にまわり続けます。点ＱはＧを出発して秒速3cmで正方形ＥＣＦＧの辺上を
+              Ｇ→Ｆ→Ｃ→Ｅ→Ｇ→Ｆ→……の順にまわり続けます。いま，点Ｐと点Ｑが同時に出発しました。これについて，次の問いに答えなさい。
+            </p>
+            <ol className="question-list">
+              <li>点Ｐと点Ｑが1回目，2回目に重なるのは，それぞれ2点が出発してから何秒後ですか。</li>
+              <li>2点が出発してから5分後までの間に，点Ｐと点Ｑは何回重なりますか。</li>
+            </ol>
+          </div>
+          <svg className="statement-figure" width={SW} height={SH}>
+            <polygon points={`${gA.x},${gA.y} ${gB.x},${gB.y} ${gC.x},${gC.y} ${gD.x},${gD.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+            <polygon points={`${gE.x},${gE.y} ${gC.x},${gC.y} ${gF.x},${gF.y} ${gG.x},${gG.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+            <text x={gA.x - 12} y={gA.y - 4} fontSize="11">A</text>
+            <text x={gB.x - 12} y={gB.y + 14} fontSize="11">B</text>
+            <text x={gC.x - 4} y={gC.y + 14} fontSize="11">C</text>
+            <text x={gD.x + 4} y={gD.y - 4} fontSize="11">D</text>
+            <text x={gE.x - 12} y={gE.y - 4} fontSize="11">E</text>
+            <text x={gF.x + 4} y={gF.y + 14} fontSize="11">F</text>
+            <text x={gG.x + 4} y={gG.y - 4} fontSize="11">G</text>
+            <text x={(gB.x + gC.x) / 2 - 8} y={gB.y + 14} fontSize="10">12cm</text>
+            <text x={(gC.x + gF.x) / 2 - 8} y={gC.y + 14} fontSize="10">15cm</text>
+          </svg>
+        </div>
       </div>
       <div className="stage">
         <svg width={width} height={height}>

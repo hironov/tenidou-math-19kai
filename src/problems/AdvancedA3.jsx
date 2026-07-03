@@ -24,6 +24,15 @@ function diffAt(t) {
 const SCALE = 8, PAD = 46, MATH_H = 30
 const toSvg = (p) => ({ x: PAD + p.x * SCALE, y: PAD + (MATH_H - p.y) * SCALE })
 
+const SS = 3.2, SPD = 18
+const toStatic = (p) => ({ x: SPD + p.x * SS, y: SPD + (MATH_H - p.y) * SS })
+const gA = toStatic(A), gB = toStatic(B), gC = toStatic(C), gD = toStatic(D)
+const SW = SPD * 2 + 20 * SS, SH = SPD * 2 + 30 * SS
+
+const GRAPH_W = 180, GRAPH_H = 130, GPAD = { l: 34, r: 10, t: 10, b: 24 }
+const gx2 = (t) => GPAD.l + (t / 14) * (GRAPH_W - GPAD.l - GPAD.r)
+const gy2 = (v) => GPAD.t + (1 - v / 210) * (GRAPH_H - GPAD.t - GPAD.b)
+
 export default function AdvancedA3() {
   const { t, setT, playing, setPlaying } = useAnimatedTime(T_MAX)
   const P = useMemo(() => pointAtDistance(P_PATH, P_SPEED * t, false), [t])
@@ -40,17 +49,44 @@ export default function AdvancedA3() {
     <div className="problem">
       <h2>応用問題A-3　長方形の辺上を動く2点と面積の差</h2>
       <div className="statement">
-        <p className="setup">
-          （図1）のような，辺ＡＤが20cmの長方形ＡＢＣＤがあります。この長方形の辺上を，点ＰはＡ→Ｄ→Ｃ→Ｂの順に，
-          点ＱはＢ→Ｃ→Ｄ→Ａの順に，それぞれ一定の速さで移動しました。（図2）のグラフは，点ＰがＡを出発してから
-          Ｂに着くまでの時間と，三角形ＡＰＢと三角形ＡＱＢの面積の差の関係を表したものです。ただし，点Ｐと点Ｑは
-          同時に出発し，点Ｐは点Ｑより速いものとします。これについて，次の問いに答えなさい。
-        </p>
-        <ol className="question-list">
-          <li>点Ｐの速さは秒速何cmですか。</li>
-          <li>辺ＡＢの長さは何cmですか。</li>
-          <li>（図2）のア，イにあてはまる数をそれぞれ求めなさい。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              （図1）のような，辺ＡＤが20cmの長方形ＡＢＣＤがあります。この長方形の辺上を，点ＰはＡ→Ｄ→Ｃ→Ｂの順に，
+              点ＱはＢ→Ｃ→Ｄ→Ａの順に，それぞれ一定の速さで移動しました。（図2）のグラフは，点ＰがＡを出発してから
+              Ｂに着くまでの時間と，三角形ＡＰＢと三角形ＡＱＢの面積の差の関係を表したものです。ただし，点Ｐと点Ｑは
+              同時に出発し，点Ｐは点Ｑより速いものとします。これについて，次の問いに答えなさい。
+            </p>
+            <ol className="question-list">
+              <li>点Ｐの速さは秒速何cmですか。</li>
+              <li>辺ＡＢの長さは何cmですか。</li>
+              <li>（図2）のア，イにあてはまる数をそれぞれ求めなさい。</li>
+            </ol>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <svg className="statement-figure" width={SW} height={SH}>
+              <polygon points={`${gA.x},${gA.y} ${gD.x},${gD.y} ${gC.x},${gC.y} ${gB.x},${gB.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+              <text x={gA.x - 12} y={gA.y + 4} fontSize="11">A</text>
+              <text x={gD.x + 4} y={gD.y + 4} fontSize="11">D</text>
+              <text x={gC.x + 4} y={gC.y + 4} fontSize="11">C</text>
+              <text x={gB.x - 12} y={gB.y + 4} fontSize="11">B</text>
+              <text x={(gA.x + gD.x) / 2 - 12} y={gA.y + 16} fontSize="10">20cm</text>
+              <text x={SW / 2 - 12} y={SH - 4} fontSize="9" fill="#718096">図1</text>
+            </svg>
+            <svg className="statement-figure" width={GRAPH_W} height={GRAPH_H}>
+              <line x1={gx2(0)} y1={gy2(0)} x2={gx2(0)} y2={gy2(210)} stroke="#888" />
+              <line x1={gx2(0)} y1={gy2(0)} x2={gx2(14)} y2={gy2(0)} stroke="#888" />
+              <path d={`M ${gx2(0)} ${gy2(0)} L ${gx2(4)} ${gy2(60)} L ${gx2(5)} ${gy2(0)} L ${gx2(10)} ${gy2(0)} L ${gx2(12.5)} ${gy2(187.5)}`}
+                fill="none" stroke="#3182ce" strokeWidth="2" />
+              <text x={gx2(0) - 14} y={gy2(60) + 3} fontSize="9">ア</text>
+              <text x={gx2(0) - 14} y={gy2(187.5) + 3} fontSize="9">イ</text>
+              <text x={gx2(4) - 4} y={GRAPH_H - 10} fontSize="9">4</text>
+              <text x={gx2(5) - 4} y={GRAPH_H - 10} fontSize="9">5</text>
+              <text x={gx2(10) - 4} y={GRAPH_H - 10} fontSize="9">10</text>
+              <text x={GRAPH_W / 2 - 12} y={GRAPH_H - 2} fontSize="9" fill="#718096">図2</text>
+            </svg>
+          </div>
+        </div>
       </div>
       <div className="stage">
         <svg width={width} height={height}>

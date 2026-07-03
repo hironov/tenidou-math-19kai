@@ -17,6 +17,14 @@ const PAD = 46
 const MATH_H = 12
 const toSvg = (p) => ({ x: PAD + p.x * SCALE, y: PAD + (MATH_H - p.y) * SCALE })
 
+// 問題文に添える、動かない静止図（教科書の図そのもの）
+const STATIC_SCALE = 8
+const STATIC_PAD = 20
+const toStatic = (p) => ({ x: STATIC_PAD + p.x * STATIC_SCALE, y: STATIC_PAD + (MATH_H - p.y) * STATIC_SCALE })
+const gB = toStatic(B), gC = toStatic(C), gA = toStatic(A)
+const STATIC_W = STATIC_PAD * 2 + 18 * STATIC_SCALE
+const STATIC_H = STATIC_PAD * 2 + 12 * STATIC_SCALE
+
 function areaAt(t) {
   const P = pointAtDistance(PATH, SPEED * t, false)
   return polygonArea([A, B, P])
@@ -39,13 +47,25 @@ export default function Example1() {
     <div className="problem">
       <h2>例題1　三角形の辺上を動く点と面積の変化</h2>
       <div className="statement">
-        <p className="setup">
-          右の図のような直角三角形ＡＢＣがあります。点ＰはＢを出発して，秒速2cmで辺上をＢ→Ｃ→Ａの順に動きます。
-        </p>
-        <ol className="question-list">
-          <li>点Ｐが出発してから11秒後の三角形ＡＢＰの面積は何cm²ですか。</li>
-          <li>三角形ＡＢＰの面積が36cm²になるのは，点Ｐが出発してから何秒後と何秒後ですか。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              右の図のような直角三角形ＡＢＣがあります。点ＰはＢを出発して，秒速2cmで辺上をＢ→Ｃ→Ａの順に動きます。
+            </p>
+            <ol className="question-list">
+              <li>点Ｐが出発してから11秒後の三角形ＡＢＰの面積は何cm²ですか。</li>
+              <li>三角形ＡＢＰの面積が36cm²になるのは，点Ｐが出発してから何秒後と何秒後ですか。</li>
+            </ol>
+          </div>
+          <svg className="statement-figure" width={STATIC_W} height={STATIC_H}>
+            <polygon points={`${gB.x},${gB.y} ${gC.x},${gC.y} ${gA.x},${gA.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+            <text x={gB.x - 12} y={gB.y + 4} fontSize="11">B</text>
+            <text x={gC.x + 4} y={gC.y + 4} fontSize="11">C</text>
+            <text x={gA.x + 4} y={gA.y + 4} fontSize="11">A</text>
+            <text x={(gB.x + gC.x) / 2 - 8} y={gB.y + 14} fontSize="10">18cm</text>
+            <text x={gC.x + 6} y={(gC.y + gA.y) / 2} fontSize="10">12cm</text>
+          </svg>
+        </div>
       </div>
 
       <div className="stage">

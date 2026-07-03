@@ -16,6 +16,15 @@ const T_MAX = 11
 const SCALE = 13, PAD = 46, MATH_H = 12
 const toSvg = (p) => ({ x: PAD + p.x * SCALE, y: PAD + (MATH_H - p.y) * SCALE })
 
+const SS = 7, SPD = 18
+const toStatic = (p) => ({ x: SPD + p.x * SS, y: SPD + (MATH_H - p.y) * SS })
+const gA = toStatic(A), gB = toStatic(B), gC = toStatic(C), gD = toStatic(D)
+const SW = SPD * 2 + 20 * SS, SH = SPD * 2 + 12 * SS
+
+const GRAPH_W = 180, GRAPH_H = 130, GPAD = { l: 34, r: 10, t: 10, b: 24 }
+const gx = (t) => GPAD.l + (t / 11) * (GRAPH_W - GPAD.l - GPAD.r)
+const gy = (v) => GPAD.t + (1 - v / 130) * (GRAPH_H - GPAD.t - GPAD.b)
+
 function areaAt(t) {
   const P = pointAtDistance(PATH, SPEED * t, false)
   return polygonArea([A, P, D])
@@ -34,14 +43,38 @@ export default function Basic3() {
     <div className="problem">
       <h2>基本問題3　長方形の辺上を動く点と面積のグラフ</h2>
       <div className="statement">
-        <p className="setup">
-          （図1）のような長方形ＡＢＣＤがあります。点ＰはＡを出発して，秒速4cmで辺上をＡ→Ｂ→Ｃ→Ｄの順に動きます。
-          （図2）のグラフは，点Ｐが出発してからの時間と，三角形ＡＰＤの面積の関係を表したものです。これについて，次の問いに答えなさい。
-        </p>
-        <ol className="question-list">
-          <li>（図1）の辺ＡＢの長さは何cmですか。</li>
-          <li>（図2）のxにあてはまる数を求めなさい。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              （図1）のような長方形ＡＢＣＤがあります。点ＰはＡを出発して，秒速4cmで辺上をＡ→Ｂ→Ｃ→Ｄの順に動きます。
+              （図2）のグラフは，点Ｐが出発してからの時間と，三角形ＡＰＤの面積の関係を表したものです。これについて，次の問いに答えなさい。
+            </p>
+            <ol className="question-list">
+              <li>（図1）の辺ＡＢの長さは何cmですか。</li>
+              <li>（図2）のxにあてはまる数を求めなさい。</li>
+            </ol>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <svg className="statement-figure" width={SW} height={SH}>
+              <polygon points={`${gA.x},${gA.y} ${gB.x},${gB.y} ${gC.x},${gC.y} ${gD.x},${gD.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+              <text x={gA.x - 12} y={gA.y + 4} fontSize="11">A</text>
+              <text x={gB.x - 12} y={gB.y + 4} fontSize="11">B</text>
+              <text x={gC.x + 4} y={gC.y + 14} fontSize="11">C</text>
+              <text x={gD.x + 4} y={gD.y + 4} fontSize="11">D</text>
+              <text x={SW / 2 - 12} y={SH - 4} fontSize="9" fill="#718096">図1</text>
+            </svg>
+            <svg className="statement-figure" width={GRAPH_W} height={GRAPH_H}>
+              <line x1={gx(0)} y1={gy(0)} x2={gx(0)} y2={gy(130)} stroke="#888" />
+              <line x1={gx(0)} y1={gy(0)} x2={gx(11)} y2={gy(0)} stroke="#888" />
+              <path d={`M ${gx(0)} ${gy(0)} L ${gx(3)} ${gy(120)} L ${gx(8)} ${gy(120)} L ${gx(11)} ${gy(0)}`} fill="none" stroke="#3182ce" strokeWidth="2" />
+              <text x={gx(0) - 14} y={gy(120) + 3} fontSize="9">x</text>
+              <text x={gx(3) - 4} y={GRAPH_H - 10} fontSize="9">3</text>
+              <text x={gx(8) - 4} y={GRAPH_H - 10} fontSize="9">8</text>
+              <text x={gx(11) - 6} y={GRAPH_H - 10} fontSize="9">11</text>
+              <text x={GRAPH_W / 2 - 12} y={GRAPH_H - 2} fontSize="9" fill="#718096">図2</text>
+            </svg>
+          </div>
+        </div>
       </div>
       <div className="stage">
         <svg width={width} height={height}>

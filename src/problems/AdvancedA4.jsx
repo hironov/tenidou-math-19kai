@@ -17,6 +17,11 @@ const T_MAX = 90
 const PAD = 46
 const toSvg = (p) => ({ x: PAD + R + p.x, y: PAD + R - p.y })
 
+const STATIC_R = 34
+const STATIC_PAD = 16
+const toStaticC = (p) => ({ x: STATIC_PAD + STATIC_R + p.x, y: STATIC_PAD + STATIC_R - p.y })
+const STATIC_SIZE = STATIC_PAD * 2 + STATIC_R * 2
+
 export default function AdvancedA4() {
   const { t, setT, playing, setPlaying, rate, setRate } = useAnimatedTime(T_MAX, { loop: true })
   const A0 = useMemo(() => pointOnCircle(O, R, A_ANGLE), [])
@@ -31,10 +36,17 @@ export default function AdvancedA4() {
   const sA0 = toSvg(A0), sB0 = toSvg(B0), sC0 = toSvg(C0)
   const size = PAD * 2 + R * 2
 
+  const gO = toStaticC(O)
+  const gA = toStaticC(pointOnCircle(O, STATIC_R, A_ANGLE))
+  const gB = toStaticC(pointOnCircle(O, STATIC_R, B_ANGLE))
+  const gC = toStaticC(pointOnCircle(O, STATIC_R, C_ANGLE))
+
   return (
     <div className="problem">
       <h2>応用問題A-4　円を3等分する点から出発する3点</h2>
       <div className="statement">
+        <div className="statement-row">
+          <div className="statement-text">
         <p className="setup">
           右の図のＡ，Ｂ，Ｃは円周を3等分する点です。3点Ｐ，Ｑ，ＲがそれぞれＡ，Ｂ，Ｃを同時に出発して，円周上を
           時計回りに動きます。1周するのにかかる時間は，点Ｐが8秒，点Ｑが12秒，点Ｒが15秒です。これについて，次の問いに答えなさい。
@@ -44,6 +56,19 @@ export default function AdvancedA4() {
           <li>3点Ｐ，Ｑ，Ｒが2回目に重なるのは，出発してから何秒後ですか。</li>
           <li>3点Ｐ，Ｑ，Ｒは，出発してから60分間に何回重なりますか。</li>
         </ol>
+          </div>
+          <svg className="statement-figure" width={STATIC_SIZE} height={STATIC_SIZE}>
+            <circle cx={gO.x} cy={gO.y} r={STATIC_R} fill="none" stroke="#333" strokeWidth="1.5" />
+            <circle cx={gO.x} cy={gO.y} r={2} fill="#333" />
+            <circle cx={gA.x} cy={gA.y} r={3} fill="#3182ce" />
+            <circle cx={gB.x} cy={gB.y} r={3} fill="#dd6b20" />
+            <circle cx={gC.x} cy={gC.y} r={3} fill="#38a169" />
+            <text x={gO.x + 4} y={gO.y + 12} fontSize="10">O</text>
+            <text x={gA.x + 5} y={gA.y - 5} fontSize="11" fill="#3182ce">A</text>
+            <text x={gB.x - 14} y={gB.y + 4} fontSize="11" fill="#dd6b20">B</text>
+            <text x={gC.x + 4} y={gC.y + 12} fontSize="11" fill="#38a169">C</text>
+          </svg>
+        </div>
       </div>
       <div className="stage">
         <svg width={size} height={size}>

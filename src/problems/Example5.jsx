@@ -13,6 +13,11 @@ const T_MAX = 40
 const PAD = 46
 const toSvg = (p) => ({ x: PAD + R + p.x, y: PAD + R - p.y })
 
+const STATIC_R = 34
+const STATIC_PAD = 16
+const toStaticC = (p) => ({ x: STATIC_PAD + STATIC_R + p.x, y: STATIC_PAD + STATIC_R - p.y })
+const STATIC_SIZE = STATIC_PAD * 2 + STATIC_R * 2
+
 export default function Example5() {
   const { t, setT, playing, setPlaying } = useAnimatedTime(T_MAX, { loop: true })
   const A = useMemo(() => pointOnCircle(O, R, START_ANGLE), [])
@@ -24,6 +29,9 @@ export default function Example5() {
   const sO = toSvg(O), sA = toSvg(A), sP = toSvg(P), sQ = toSvg(Q)
   const size = PAD * 2 + R * 2
 
+  const gO = toStaticC(O)
+  const gA = toStaticC(pointOnCircle(O, STATIC_R, START_ANGLE))
+
   const nearlyEqual = (a, b, eps = 1.5) => Math.abs(a - b) < eps
   const overlapping = nearlyEqual(P.x, Q.x) && nearlyEqual(P.y, Q.y)
   const isRightAngle = nearlyEqual(anglePAQ, 90, 2)
@@ -32,15 +40,26 @@ export default function Example5() {
     <div className="problem">
       <h2>例題5　円周上を反対向きにまわる2点と角速度</h2>
       <div className="statement">
-        <p className="setup">
-          右の図のような，Ｏを中心とする円の周上を，2点Ｐ，ＱがＡを同時に出発して，それぞれ一定の速さで矢印の方向に
-          （互いに反対向きに）まわります。1周するのにかかる時間は，点Ｐは40秒，点Ｑは24秒です。
-        </p>
-        <ol className="question-list">
-          <li>2点が出発してから9秒後の角ＰＯＱの大きさは何度ですか。小さい方の角度を答えなさい。</li>
-          <li>出発した後，点Ｐと点Ｑがはじめて重なるのは，2点が出発してから何秒後ですか。</li>
-          <li>角ＰＡＱがはじめて直角になるのは，2点が出発してから何秒後ですか。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              右の図のような，Ｏを中心とする円の周上を，2点Ｐ，ＱがＡを同時に出発して，それぞれ一定の速さで矢印の方向に
+              （互いに反対向きに）まわります。1周するのにかかる時間は，点Ｐは40秒，点Ｑは24秒です。
+            </p>
+            <ol className="question-list">
+              <li>2点が出発してから9秒後の角ＰＯＱの大きさは何度ですか。小さい方の角度を答えなさい。</li>
+              <li>出発した後，点Ｐと点Ｑがはじめて重なるのは，2点が出発してから何秒後ですか。</li>
+              <li>角ＰＡＱがはじめて直角になるのは，2点が出発してから何秒後ですか。</li>
+            </ol>
+          </div>
+          <svg className="statement-figure" width={STATIC_SIZE} height={STATIC_SIZE}>
+            <circle cx={gO.x} cy={gO.y} r={STATIC_R} fill="none" stroke="#333" strokeWidth="1.5" />
+            <circle cx={gO.x} cy={gO.y} r={2} fill="#333" />
+            <circle cx={gA.x} cy={gA.y} r={3.5} fill="#805ad5" />
+            <text x={gO.x + 4} y={gO.y + 12} fontSize="10">O</text>
+            <text x={gA.x + 5} y={gA.y - 5} fontSize="11" fill="#805ad5">A</text>
+          </svg>
+        </div>
       </div>
 
       <div className="stage">

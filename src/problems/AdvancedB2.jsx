@@ -18,6 +18,11 @@ const T_MAX = 84 // 2点が再びAで重なるまで(28と42の最小公倍数)
 const SCALE = 6, PAD = 46, MATH_H = 24
 const toSvg = (p) => ({ x: PAD + p.x * SCALE, y: PAD + (MATH_H - p.y) * SCALE })
 
+const SS = 2.8, SPD = 18
+const toStatic = (p) => ({ x: SPD + p.x * SS, y: SPD + (MATH_H - p.y) * SS })
+const gA = toStatic(A), gB = toStatic(B), gC = toStatic(C), gD = toStatic(D)
+const SW = SPD * 2 + 60 * SS, SH = SPD * 2 + 24 * SS
+
 export default function AdvancedB2() {
   const { t, setT, playing, setPlaying, rate, setRate } = useAnimatedTime(T_MAX, { loop: true })
   const P = useMemo(() => pointAtDistanceOnSegment(P_PATH, P_SPEED * t, true), [t])
@@ -45,6 +50,8 @@ export default function AdvancedB2() {
     <div className="problem">
       <h2>応用問題B-2　長方形の辺上を動く2点と直線が分ける面積</h2>
       <div className="statement">
+        <div className="statement-row">
+          <div className="statement-text">
         <p className="setup">
           辺ＡＢが24cm，辺ＡＤが60cmの長方形ＡＢＣＤがあります。点ＰはＡを出発して，長方形の辺上をＡ→Ｂ→Ｃ→Ｄ→Ａ→……の
           向きに，秒速6cmで動きます。点Ｑは点Ｐと同時にＡを出発して，長方形ＡＢＣＤの辺上をＡ→Ｄ→Ｃ→Ｂ→Ａ→……の向きに，
@@ -56,6 +63,17 @@ export default function AdvancedB2() {
           <li>2点Ｐ，Ｑがともに長方形の頂点にあるときで，2つの部分の面積が等しくなるのは，出発してから何秒後ですか。</li>
           <li>点Ｐが長方形の頂点にあるときで，大きい方の面積が小さい方の面積の3倍となるのは，出発してから何秒後ですか。</li>
         </ol>
+          </div>
+          <svg className="statement-figure" width={SW} height={SH}>
+            <polygon points={`${gA.x},${gA.y} ${gB.x},${gB.y} ${gC.x},${gC.y} ${gD.x},${gD.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+            <text x={gA.x - 12} y={gA.y - 4} fontSize="11">A</text>
+            <text x={gB.x - 12} y={gB.y + 14} fontSize="11">B</text>
+            <text x={gC.x + 4} y={gC.y + 14} fontSize="11">C</text>
+            <text x={gD.x + 4} y={gD.y - 4} fontSize="11">D</text>
+            <text x={(gA.x + gD.x) / 2 - 12} y={gA.y - 8} fontSize="10">60cm</text>
+            <text x={gA.x - 34} y={(gA.y + gB.y) / 2} fontSize="10">24cm</text>
+          </svg>
+        </div>
       </div>
       <div className="stage">
         <svg width={width} height={height}>

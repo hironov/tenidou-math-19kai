@@ -17,6 +17,11 @@ const T_MAX = 24
 const SCALE = 14, PAD = 40, MATH_H = 12
 const toSvg = (p) => ({ x: PAD + p.x * SCALE, y: PAD + (MATH_H - p.y) * SCALE })
 
+const SS = 7, SPD = 18
+const toStatic = (p) => ({ x: SPD + p.x * SS, y: SPD + (MATH_H - p.y) * SS })
+const gA = toStatic(A), gB = toStatic(B), gC = toStatic(C), gD = toStatic(D)
+const SW = SPD * 2 + 12 * SS, SH = SPD * 2 + 12 * SS
+
 export default function Practice1() {
   const { t, setT, playing, setPlaying } = useAnimatedTime(T_MAX, { loop: true })
   const P = useMemo(() => pointAtDistance(P_PATH, P_SPEED * t, true), [t])
@@ -31,13 +36,25 @@ export default function Practice1() {
     <div className="problem">
       <h2>練習問題1　正方形の辺上を動く2点と三角形の面積</h2>
       <div className="statement">
-        <p className="setup">
-          右の図のような正方形ＡＢＣＤがあります。点Ｐと点ＱはＡを同時に出発して，点Ｐは秒速4cm，点Ｑは秒速3cmで，
-          それぞれ矢印の方向に辺上をまわり続けます。
-        </p>
-        <ol className="question-list">
-          <li>2点が出発してから5秒後の三角形ＡＰＱの面積は何cm²ですか。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              右の図のような正方形ＡＢＣＤがあります。点Ｐと点ＱはＡを同時に出発して，点Ｐは秒速4cm，点Ｑは秒速3cmで，
+              それぞれ矢印の方向に辺上をまわり続けます。
+            </p>
+            <ol className="question-list">
+              <li>2点が出発してから5秒後の三角形ＡＰＱの面積は何cm²ですか。</li>
+            </ol>
+          </div>
+          <svg className="statement-figure" width={SW} height={SH}>
+            <polygon points={`${gA.x},${gA.y} ${gB.x},${gB.y} ${gC.x},${gC.y} ${gD.x},${gD.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+            <text x={gA.x - 12} y={gA.y - 4} fontSize="11">A</text>
+            <text x={gB.x - 12} y={gB.y + 14} fontSize="11">B</text>
+            <text x={gC.x + 4} y={gC.y + 14} fontSize="11">C</text>
+            <text x={gD.x + 4} y={gD.y - 4} fontSize="11">D</text>
+            <text x={(gB.x + gC.x) / 2 - 8} y={gB.y + 14} fontSize="10">12cm</text>
+          </svg>
+        </div>
       </div>
       <div className="stage">
         <svg width={width} height={height}>

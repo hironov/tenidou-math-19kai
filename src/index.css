@@ -104,6 +104,26 @@ main {
   margin-bottom: 0;
 }
 
+.statement-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.statement-text {
+  flex: 1 1 260px;
+  min-width: 220px;
+}
+
+.statement-figure {
+  flex-shrink: 0;
+  background: white;
+  border: 1px solid #e2c88a;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
 .stage {
   display: flex;
   flex-wrap: wrap;

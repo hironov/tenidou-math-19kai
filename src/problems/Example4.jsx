@@ -19,6 +19,18 @@ const PAD = 46
 const MATH_H = 12
 const toSvg = (p) => ({ x: PAD + p.x * SCALE, y: PAD + (MATH_H - p.y) * SCALE })
 
+const STATIC_SCALE = 7
+const STATIC_PAD = 20
+const toStatic = (p) => ({ x: STATIC_PAD + p.x * STATIC_SCALE, y: STATIC_PAD + (MATH_H - p.y) * STATIC_SCALE })
+const gA = toStatic(A), gB = toStatic(B), gC = toStatic(C), gD = toStatic(D)
+const STATIC_W = STATIC_PAD * 2 + 20 * STATIC_SCALE
+const STATIC_H = STATIC_PAD * 2 + 12 * STATIC_SCALE
+
+// 図2（面積グラフ）の静止版。形は解説の値と一致（10秒でC、16秒でDに到着）。
+const GRAPH_W = 180, GRAPH_H = 130, GPAD = { l: 34, r: 10, t: 10, b: 24 }
+const gx = (t) => GPAD.l + (t / 16) * (GRAPH_W - GPAD.l - GPAD.r)
+const gy = (v) => GPAD.t + (1 - v / 120) * (GRAPH_H - GPAD.t - GPAD.b)
+
 function areaAt(t) {
   const P = pointAtDistance(PATH, SPEED * t, false)
   return polygonArea([A, P, D])
@@ -37,15 +49,39 @@ export default function Example4() {
     <div className="problem">
       <h2>例題4　台形の辺上を動く点と三角形の面積のグラフ</h2>
       <div className="statement">
-        <p className="setup">
-          右の図（図1）のような台形ＡＢＣＤがあります。点ＰはＢを出発して，秒速2cmで辺上をＢ→Ｃ→Ｄの順に動きます。
-          下のグラフ（図2）は，点Ｐが出発してからの時間と，三角形ＡＰＤの面積の関係を表したものです。
-        </p>
-        <ol className="question-list">
-          <li>（図1）の辺ＡＢ，辺ＤＣの長さはそれぞれ何cmですか。</li>
-          <li>（図2）のxにあてはまる数を求めなさい。</li>
-          <li>三角形ＡＰＤの面積が80cm²になるのは，点Ｐが出発してから何秒後と何秒後ですか。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              右の図（図1）のような台形ＡＢＣＤがあります。点ＰはＢを出発して，秒速2cmで辺上をＢ→Ｃ→Ｄの順に動きます。
+              下のグラフ（図2）は，点Ｐが出発してからの時間と，三角形ＡＰＤの面積の関係を表したものです。
+            </p>
+            <ol className="question-list">
+              <li>（図1）の辺ＡＢ，辺ＤＣの長さはそれぞれ何cmですか。</li>
+              <li>（図2）のxにあてはまる数を求めなさい。</li>
+              <li>三角形ＡＰＤの面積が80cm²になるのは，点Ｐが出発してから何秒後と何秒後ですか。</li>
+            </ol>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <svg className="statement-figure" width={STATIC_W} height={STATIC_H}>
+              <polygon points={`${gA.x},${gA.y} ${gB.x},${gB.y} ${gC.x},${gC.y} ${gD.x},${gD.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+              <text x={gA.x - 12} y={gA.y + 4} fontSize="11">A</text>
+              <text x={gB.x - 12} y={gB.y + 4} fontSize="11">B</text>
+              <text x={gC.x + 4} y={gC.y + 14} fontSize="11">C</text>
+              <text x={gD.x + 4} y={gD.y + 4} fontSize="11">D</text>
+              <text x={STATIC_W / 2 - 12} y={STATIC_H - 4} fontSize="9" fill="#718096">図1</text>
+            </svg>
+            <svg className="statement-figure" width={GRAPH_W} height={GRAPH_H}>
+              <line x1={gx(0)} y1={gy(0)} x2={gx(0)} y2={gy(120)} stroke="#888" />
+              <line x1={gx(0)} y1={gy(0)} x2={gx(16)} y2={gy(0)} stroke="#888" />
+              <path d={`M ${gx(0)} ${gy(40)} L ${gx(10)} ${gy(120)} L ${gx(16)} ${gy(0)}`} fill="none" stroke="#3182ce" strokeWidth="2" />
+              <text x={gx(0) - 22} y={gy(40) + 3} fontSize="9">40</text>
+              <text x={gx(0) - 26} y={gy(120) + 3} fontSize="9">120</text>
+              <text x={gx(10) - 4} y={GRAPH_H - 10} fontSize="9">10</text>
+              <text x={gx(16) - 4} y={GRAPH_H - 10} fontSize="9">x</text>
+              <text x={GRAPH_W / 2 - 12} y={GRAPH_H - 2} fontSize="9" fill="#718096">図2</text>
+            </svg>
+          </div>
+        </div>
       </div>
 
       <div className="stage">

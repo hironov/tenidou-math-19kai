@@ -24,19 +24,37 @@ export default function Basic4() {
   const width = PAD * 2 + 18 * SCALE
   const height = PAD * 2 + 10 * SCALE
 
+  const SS = 6, SPD = 18
+  const toStatic = (p) => ({ x: SPD + p.x * SS, y: SPD + (MATH_H - p.y) * SS })
+  const gA = toStatic(A), gB = toStatic(B), gC = toStatic(C), gD = toStatic(D)
+  const SW = SPD * 2 + 18 * SS, SH = SPD * 2 + 10 * SS
+
   return (
     <div className="problem">
       <h2>基本問題4　長方形の辺上を動く2点と四角形の面積</h2>
       <div className="statement">
-        <p className="setup">
-          右の図のような長方形ＡＢＣＤがあります。点Ｐは秒速1cmで辺ＡＤ上をＡからＤまで動き，点Ｑは秒速2cmで辺ＢＣ上を
-          ＣからＢまで動きます。点Ｐと点Ｑが同時に出発してから点ＱがＢに着くまでの間について，次の問いに答えなさい。
-        </p>
-        <ol className="question-list">
-          <li>2点が出発してから4秒後の四角形ＡＢＱＰの面積は何cm²ですか。</li>
-          <li>直線ＰＱが辺ＡＢと平行になるのは，2点が出発してから何秒後ですか。</li>
-          <li>四角形ＡＢＱＰの面積が51cm²になるのは，2点が出発してから何秒後ですか。</li>
-        </ol>
+        <div className="statement-row">
+          <div className="statement-text">
+            <p className="setup">
+              右の図のような長方形ＡＢＣＤがあります。点Ｐは秒速1cmで辺ＡＤ上をＡからＤまで動き，点Ｑは秒速2cmで辺ＢＣ上を
+              ＣからＢまで動きます。点Ｐと点Ｑが同時に出発してから点ＱがＢに着くまでの間について，次の問いに答えなさい。
+            </p>
+            <ol className="question-list">
+              <li>2点が出発してから4秒後の四角形ＡＢＱＰの面積は何cm²ですか。</li>
+              <li>直線ＰＱが辺ＡＢと平行になるのは，2点が出発してから何秒後ですか。</li>
+              <li>四角形ＡＢＱＰの面積が51cm²になるのは，2点が出発してから何秒後ですか。</li>
+            </ol>
+          </div>
+          <svg className="statement-figure" width={SW} height={SH}>
+            <polygon points={`${gA.x},${gA.y} ${gD.x},${gD.y} ${gC.x},${gC.y} ${gB.x},${gB.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+            <text x={gA.x - 12} y={gA.y - 4} fontSize="11">A</text>
+            <text x={gD.x + 4} y={gD.y - 4} fontSize="11">D</text>
+            <text x={gB.x - 12} y={gB.y + 14} fontSize="11">B</text>
+            <text x={gC.x + 4} y={gC.y + 14} fontSize="11">C</text>
+            <text x={(gA.x + gD.x) / 2 - 8} y={gA.y - 8} fontSize="10">18cm</text>
+            <text x={gA.x - 30} y={(gA.y + gB.y) / 2} fontSize="10">10cm</text>
+          </svg>
+        </div>
       </div>
       <div className="stage">
         <svg width={width} height={height}>

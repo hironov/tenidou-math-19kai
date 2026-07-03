@@ -18,6 +18,11 @@ const T_MAX = 60
 const SCALE = 4.6, PAD = 40, MATH_H = SIDE
 const toSvg = (p) => ({ x: PAD + p.x * SCALE, y: PAD + (MATH_H - p.y) * SCALE })
 
+// 静止図は辺の長さが未知（求める値）なので、正方形の見た目だけの簡易図にする。
+const SG_SIZE = 90
+const gA2 = { x: 12, y: 12 }, gB2 = { x: 12, y: SG_SIZE - 12 }
+const gC2 = { x: SG_SIZE - 12, y: SG_SIZE - 12 }, gD2 = { x: SG_SIZE - 12, y: 12 }
+
 export default function AdvancedA2() {
   const { t, setT, playing, setPlaying, rate, setRate } = useAnimatedTime(T_MAX, { loop: true })
   const P = useMemo(() => pointAtDistance(P_PATH, P_SPEED * t, true), [t])
@@ -32,6 +37,8 @@ export default function AdvancedA2() {
     <div className="problem">
       <h2>応用問題A-2　正方形の辺の長さを求める（出会いの時間から逆算）</h2>
       <div className="statement">
+        <div className="statement-row">
+          <div className="statement-text">
         <p className="setup">
           右の図のような正方形ＡＢＣＤがあります。点ＰはＡを出発して秒速9cmで，点ＱはＤを出発して秒速6cmで，
           それぞれ矢印の方向に辺上をまわり続けます。点Ｐと点Ｑが3回目に重なるのは，出発してから55秒後です。
@@ -39,6 +46,15 @@ export default function AdvancedA2() {
         <ol className="question-list">
           <li>正方形ＡＢＣＤの1辺の長さは何cmですか。</li>
         </ol>
+          </div>
+          <svg className="statement-figure" width={SG_SIZE} height={SG_SIZE}>
+            <polygon points={`${gA2.x},${gA2.y} ${gB2.x},${gB2.y} ${gC2.x},${gC2.y} ${gD2.x},${gD2.y}`} fill="none" stroke="#333" strokeWidth="1.5" />
+            <text x={gA2.x - 12} y={gA2.y - 2} fontSize="11">A</text>
+            <text x={gB2.x - 12} y={gB2.y + 12} fontSize="11">B</text>
+            <text x={gC2.x + 4} y={gC2.y + 12} fontSize="11">C</text>
+            <text x={gD2.x + 4} y={gD2.y - 2} fontSize="11">D</text>
+          </svg>
+        </div>
       </div>
       <div className="stage">
         <svg width={width} height={height}>
