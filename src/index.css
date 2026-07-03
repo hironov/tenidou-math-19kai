@@ -40,6 +40,17 @@ body {
   font-weight: bold;
 }
 
+.round-btn {
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.round-btn.active {
+  background: #1a365d;
+  color: white;
+  border-color: #1a365d;
+}
+
 .subnav {
   display: flex;
   gap: 6px;
@@ -254,4 +265,220 @@ main {
 .explain h3 {
   margin-top: 0;
   color: #276749;
+}
+
+/* --- 数列・数表用スタイル --- */
+
+.n-input {
+  width: 64px;
+  padding: 6px 8px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.seq-wrap {
+  overflow-x: auto;
+  padding: 4px 0;
+}
+
+.seq-strip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.seq-item-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.seq-group-start {
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 2px dashed #cbd5e0;
+}
+
+.seq-item {
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #333;
+  border-radius: 6px;
+  background: white;
+  font-weight: bold;
+  padding: 0 6px;
+  white-space: nowrap;
+}
+
+.seq-highlight {
+  background: #e53e3e;
+  color: white;
+  border-color: #e53e3e;
+}
+
+.seq-diff {
+  font-size: 0.75rem;
+  color: #718096;
+  min-width: 16px;
+  text-align: center;
+}
+
+.seq-ellipsis {
+  border: none;
+  background: none;
+  font-weight: normal;
+}
+
+.num-table-wrap {
+  overflow-x: auto;
+}
+
+.num-table {
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.num-table th, .num-table td {
+  border: 1px solid #cbd5e0;
+  padding: 6px 8px;
+  text-align: center;
+  min-width: 34px;
+}
+
+.num-table th {
+  background: #edf2f7;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.num-table-hi {
+  background: #e53e3e !important;
+  color: white;
+  font-weight: bold;
+}
+
+.num-table-sub {
+  font-size: 0.65rem;
+  color: #a0aec0;
+}
+
+.num-table-hi .num-table-sub {
+  color: #fed7d7;
+}
+
+.pascal-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 8px 0;
+}
+
+.pascal-row {
+  display: flex;
+  gap: 6px;
+}
+
+.pascal-cell {
+  min-width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #333;
+  border-radius: 6px;
+  background: white;
+  font-size: 0.85rem;
+  padding: 0 4px;
+}
+
+.pascal-hi {
+  background: #e53e3e;
+  color: white;
+  border-color: #e53e3e;
+  font-weight: bold;
+}
+
+.frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  line-height: 1;
+  margin: 0 2px;
+}
+
+.frac .num {
+  border-bottom: 1.5px solid currentColor;
+  padding: 0 3px 1px;
+}
+
+.frac .den {
+  padding: 1px 3px 0;
+}
+
+.triangle-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  overflow-x: auto;
+  padding: 8px 0;
+}
+
+.triangle-row {
+  display: flex;
+}
+
+.tri-cell {
+  width: 46px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  position: relative;
+}
+
+.tri-up, .tri-down {
+  width: 0;
+  height: 0;
+  position: absolute;
+  border-left: 23px solid transparent;
+  border-right: 23px solid transparent;
+}
+
+.tri-up {
+  border-bottom: 40px solid #cbd5e0;
+  top: 0;
+}
+
+.tri-down {
+  border-top: 40px solid #cbd5e0;
+  bottom: 0;
+}
+
+.tri-up.tri-hi {
+  border-bottom-color: #e53e3e;
+}
+
+.tri-down.tri-hi {
+  border-top-color: #e53e3e;
+}
+
+.tri-label {
+  position: relative;
+  z-index: 1;
+  font-weight: bold;
+  color: #1a202c;
+}
+
+.tri-hi + .tri-label, .tri-label.tri-hi-label {
+  color: white;
 }
