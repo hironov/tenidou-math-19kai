@@ -88,6 +88,26 @@ import AdvancedA4_16 from './problems16/AdvancedA4'
 import AdvancedB1_16 from './problems16/AdvancedB1'
 import AdvancedB2_16 from './problems16/AdvancedB2'
 
+import Example1_14 from './problems14/Example1'
+import Example2_14 from './problems14/Example2'
+import Example3_14 from './problems14/Example3'
+import Example4_14 from './problems14/Example4'
+import Example5_14 from './problems14/Example5'
+import Basic1_14 from './problems14/Basic1'
+import Basic2_14 from './problems14/Basic2'
+import Basic3_14 from './problems14/Basic3'
+import Basic4_14 from './problems14/Basic4'
+import Practice1_14 from './problems14/Practice1'
+import Practice2_14 from './problems14/Practice2'
+import Practice3_14 from './problems14/Practice3'
+import Practice4_14 from './problems14/Practice4'
+import AdvancedA1_14 from './problems14/AdvancedA1'
+import AdvancedA2_14 from './problems14/AdvancedA2'
+import AdvancedA3_14 from './problems14/AdvancedA3'
+import AdvancedA4_14 from './problems14/AdvancedA4'
+import AdvancedB1_14 from './problems14/AdvancedB1'
+import AdvancedB2_14 from './problems14/AdvancedB2'
+
 const ROUNDS = [
   {
     key: 'round19',
@@ -294,6 +314,56 @@ const ROUNDS = [
           { key: 'adA4', label: 'A-4', Component: AdvancedA4_16 },
           { key: 'adB1', label: 'B-1', Component: AdvancedB1_16 },
           { key: 'adB2', label: 'B-2', Component: AdvancedB2_16 },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'round14',
+    label: '第14回　水量の変化',
+    navLabel: '第14回',
+    groups: [
+      {
+        key: 'example',
+        label: '例題',
+        items: [
+          { key: 'ex1', label: '1', Component: Example1_14 },
+          { key: 'ex2', label: '2', Component: Example2_14 },
+          { key: 'ex3', label: '3', Component: Example3_14 },
+          { key: 'ex4', label: '4', Component: Example4_14 },
+          { key: 'ex5', label: '5', Component: Example5_14 },
+        ],
+      },
+      {
+        key: 'basic',
+        label: '基本問題',
+        items: [
+          { key: 'ba1', label: '1', Component: Basic1_14 },
+          { key: 'ba2', label: '2', Component: Basic2_14 },
+          { key: 'ba3', label: '3', Component: Basic3_14 },
+          { key: 'ba4', label: '4', Component: Basic4_14 },
+        ],
+      },
+      {
+        key: 'practice',
+        label: '練習問題',
+        items: [
+          { key: 'pr1', label: '1', Component: Practice1_14 },
+          { key: 'pr2', label: '2', Component: Practice2_14 },
+          { key: 'pr3', label: '3', Component: Practice3_14 },
+          { key: 'pr4', label: '4', Component: Practice4_14 },
+        ],
+      },
+      {
+        key: 'advanced',
+        label: '応用問題（最難関）',
+        items: [
+          { key: 'adA1', label: 'A-1', Component: AdvancedA1_14 },
+          { key: 'adA2', label: 'A-2', Component: AdvancedA2_14 },
+          { key: 'adA3', label: 'A-3', Component: AdvancedA3_14 },
+          { key: 'adA4', label: 'A-4', Component: AdvancedA4_14 },
+          { key: 'adB1', label: 'B-1', Component: AdvancedB1_14 },
+          { key: 'adB2', label: 'B-2', Component: AdvancedB2_14 },
         ],
       },
     ],
