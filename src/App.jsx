@@ -42,6 +42,29 @@ import AdvancedA4_18 from './problems18/AdvancedA4'
 import AdvancedB1_18 from './problems18/AdvancedB1'
 import AdvancedB2_18 from './problems18/AdvancedB2'
 
+import Example1_17 from './problems17/Example1'
+import Example2_17 from './problems17/Example2'
+import Example3_17 from './problems17/Example3'
+import Example4_17 from './problems17/Example4'
+import Example5_17 from './problems17/Example5'
+import Example6_17 from './problems17/Example6'
+import Example7_17 from './problems17/Example7'
+import Basic1_17 from './problems17/Basic1'
+import Basic2_17 from './problems17/Basic2'
+import Basic3_17 from './problems17/Basic3'
+import Basic4_17 from './problems17/Basic4'
+import Practice1_17 from './problems17/Practice1'
+import Practice2_17 from './problems17/Practice2'
+import Practice3_17 from './problems17/Practice3'
+import Practice4_17 from './problems17/Practice4'
+import Practice5_17 from './problems17/Practice5'
+import AdvancedA1_17 from './problems17/AdvancedA1'
+import AdvancedA2_17 from './problems17/AdvancedA2'
+import AdvancedA3_17 from './problems17/AdvancedA3'
+import AdvancedA4_17 from './problems17/AdvancedA4'
+import AdvancedB1_17 from './problems17/AdvancedB1'
+import AdvancedB2_17 from './problems17/AdvancedB2'
+
 const ROUNDS = [
   {
     key: 'round19',
@@ -142,6 +165,59 @@ const ROUNDS = [
           { key: 'adA4', label: 'A-4', Component: AdvancedA4_18 },
           { key: 'adB1', label: 'B-1', Component: AdvancedB1_18 },
           { key: 'adB2', label: 'B-2', Component: AdvancedB2_18 },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'round17',
+    label: '第17回　いろいろな旅人算',
+    navLabel: '第17回',
+    groups: [
+      {
+        key: 'example',
+        label: '例題',
+        items: [
+          { key: 'ex1', label: '1', Component: Example1_17 },
+          { key: 'ex2', label: '2', Component: Example2_17 },
+          { key: 'ex3', label: '3', Component: Example3_17 },
+          { key: 'ex4', label: '4', Component: Example4_17 },
+          { key: 'ex5', label: '5', Component: Example5_17 },
+          { key: 'ex6', label: '6', Component: Example6_17 },
+          { key: 'ex7', label: '7', Component: Example7_17 },
+        ],
+      },
+      {
+        key: 'basic',
+        label: '基本問題',
+        items: [
+          { key: 'ba1', label: '1', Component: Basic1_17 },
+          { key: 'ba2', label: '2', Component: Basic2_17 },
+          { key: 'ba3', label: '3', Component: Basic3_17 },
+          { key: 'ba4', label: '4', Component: Basic4_17 },
+        ],
+      },
+      {
+        key: 'practice',
+        label: '練習問題',
+        items: [
+          { key: 'pr1', label: '1', Component: Practice1_17 },
+          { key: 'pr2', label: '2', Component: Practice2_17 },
+          { key: 'pr3', label: '3', Component: Practice3_17 },
+          { key: 'pr4', label: '4', Component: Practice4_17 },
+          { key: 'pr5', label: '5', Component: Practice5_17 },
+        ],
+      },
+      {
+        key: 'advanced',
+        label: '応用問題（最難関）',
+        items: [
+          { key: 'adA1', label: 'A-1', Component: AdvancedA1_17 },
+          { key: 'adA2', label: 'A-2', Component: AdvancedA2_17 },
+          { key: 'adA3', label: 'A-3', Component: AdvancedA3_17 },
+          { key: 'adA4', label: 'A-4', Component: AdvancedA4_17 },
+          { key: 'adB1', label: 'B-1', Component: AdvancedB1_17 },
+          { key: 'adB2', label: 'B-2', Component: AdvancedB2_17 },
         ],
       },
     ],

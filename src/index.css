@@ -235,6 +235,12 @@ main {
   font-size: 0.9rem;
 }
 
+.jump-btn.active {
+  background: #3182ce;
+  color: white;
+  border-color: #3182ce;
+}
+
 .jump-btn:hover {
   background: #e2e8f0;
 }
