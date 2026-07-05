@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { DicePicker } from '../components/DicePicker'
 import { GridPathDiagram } from '../components/GridPathDiagram'
 import { SlotSequence } from '../components/SlotSequence'
@@ -11,6 +12,27 @@ const PEOPLE = [
   { key: '花子', label: '花子', count: 1, swatch: '#68d391' },
   { key: '弟', label: '弟', count: 1, swatch: '#fc8181' },
 ]
+
+const AB_ROUTES = ['道1', '道2', '道3', '道4']
+const BC_ROUTES = ['道1', '道2', '道3', '道4', '道5']
+
+function RoutePicker() {
+  const [ab, setAb] = useState(null)
+  const [bc, setBc] = useState(null)
+  return (
+    <div>
+      <p style={{ fontWeight: 'bold', marginBottom: 4 }}>ＡＢ間の道を選ぶ（4本）</p>
+      <div className="combo-items">
+        {AB_ROUTES.map((r) => <button key={r} className={`combo-item${ab === r ? ' active' : ''}`} onClick={() => setAb(r)}>{r}</button>)}
+      </div>
+      <p style={{ fontWeight: 'bold', margin: '10px 0 4px' }}>ＢＣ間の道を選ぶ（5本）</p>
+      <div className="combo-items">
+        {BC_ROUTES.map((r) => <button key={r} className={`combo-item${bc === r ? ' active' : ''}`} onClick={() => setBc(r)}>{r}</button>)}
+      </div>
+      {ab && bc && <p className="combo-message">道順決定：Ａ→({ab})→Ｂ→({bc})→Ｃ</p>}
+    </div>
+  )
+}
 
 export default function Basic1() {
   return (
@@ -30,6 +52,9 @@ export default function Basic1() {
 
       <h3>(2) Ａ地点からＢ地点までの道順</h3>
       <GridPathDiagram cols={4} rows={3} exists={exists13} startLabel="A" endLabel="B" />
+
+      <h3>(3) Ａ地点からＢ地点を通ってＣ地点までの道順</h3>
+      <RoutePicker />
 
       <h3>(4) 4人のならび方</h3>
       <SlotSequence slotCount={4} colors={PEOPLE} />

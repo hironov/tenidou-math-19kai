@@ -2,10 +2,29 @@ import { useState } from 'react'
 import { spiralSquareValue, gcd } from '../utils/sequence'
 import { FractionText } from '../components/FractionText'
 import { NControl } from '../components/NControl'
+import { NumberTable } from '../components/NumberTable'
 
 // 表2（丸番号）は例題4と同じらせん型。行＝分母，列＝分子として考える。
 function circledNumberOf(denomReduced, numerReduced) {
   return spiralSquareValue(denomReduced, numerReduced)
+}
+
+// ①②③……の丸数字表示（21以上はCJKの丸数字を使用）
+const CIRCLED_1_20 = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩', '⑪', '⑫', '⑬', '⑭', '⑮', '⑯', '⑰', '⑱', '⑲', '⑳']
+function circledDigit(n) {
+  if (n >= 1 && n <= 20) return CIRCLED_1_20[n - 1]
+  if (n >= 21 && n <= 35) return String.fromCodePoint(0x3251 + (n - 21))
+  return `(${n})`
+}
+
+// 表（約分前）のr行c列＝分母r，分子cのマス。番号は例題4と同じらせん規則で
+// 「約分前」のr，cから直接求め，表示する値だけを約分する。
+function cellAt(r, c) {
+  const g = gcd(r, c)
+  const rn = c / g
+  const rd = r / g
+  const n = spiralSquareValue(r, c)
+  return { value: <FractionText num={rn} den={rd} />, sub: circledDigit(n) }
 }
 
 export default function AdvancedB2() {
@@ -30,6 +49,10 @@ export default function AdvancedB2() {
           <li>番号①から番号50までの数を加えると，その和はいくつになりますか。</li>
         </ol>
       </div>
+
+      <NumberTable rows={6} cols={6} rowLabel="段目（分母）" colLabel="列目（分子）"
+        cell={(r, c) => cellAt(r, c)}
+        highlight={den <= 6 && num <= 6 ? { r: den, c: num } : null} />
 
       <div className="readout">
         <p>

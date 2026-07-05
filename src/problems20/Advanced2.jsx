@@ -2,6 +2,7 @@ import { useAnimatedTime } from '../hooks/useAnimatedTime'
 import { TimeSlider } from '../components/TimeSlider'
 import { LinearTrackView } from '../components/LinearTrackView'
 import { PositionDiagram } from '../components/PositionDiagram'
+import { ValueGraph } from '../components/ValueGraph'
 
 const DIST = 2350
 const T_MAX = 47
@@ -12,6 +13,7 @@ function posAni(t) {
   if (t <= 16) return 40 * (t - 8)
   return Math.min(DIST, 320 + 70 * (t - 16))
 }
+function gap(t) { return Math.abs(posAni(t) - posOtouto(t)) }
 
 export default function Advanced2() {
   const { t, setT, playing, setPlaying } = useAnimatedTime(T_MAX)
@@ -31,14 +33,19 @@ export default function Advanced2() {
 
       <LinearTrackView length={DIST} markers={[{ pos: 0, label: '家' }, { pos: DIST, label: '学校' }]}
         points={[{ label: '兄', color: '#3182ce', pos: posAni(t) }, { label: '弟', color: '#dd6b20', pos: posOtouto(t) }]} />
-      <div className="readout"><p>弟が出発してからの経過：<b>{t.toFixed(1)}</b> 分後</p></div>
+      <div className="readout"><p>弟が出発してからの経過：<b>{t.toFixed(1)}</b> 分後　／　2人の間のきょり：<b>{gap(t).toFixed(0)}</b> m</p></div>
       <TimeSlider t={t} setT={setT} tMax={T_MAX} playing={playing} setPlaying={setPlaying}
-        jumps={[{ label: '8分後（兄が出発）', t: 8 }, { label: '16分後（速さを変える）', t: 16 }, { label: '45分後（兄が到着）', t: 45 }, { label: '47分後（弟が到着）', t: 47 }]} />
+        jumps={[{ label: '8分後（兄が出発）', t: 8 }, { label: '16分後（速さを変える）', t: 16 }, { label: '40分後（兄が弟を追いこす）', t: 40 }, { label: '45分後（兄が到着・きょり100m）', t: 45 }, { label: '47分後（弟が到着）', t: 47 }]} />
 
       <div className="graph-block">
         <h3>ダイヤグラム</h3>
         <PositionDiagram tMax={T_MAX} yMax={DIST} t={t} yLabel="道のり(m)" xLabel="時間(分)" yBottomLabel="家" yTopLabel="学校"
           series={[{ label: '兄', color: '#3182ce', fn: posAni }, { label: '弟', color: '#dd6b20', fn: posOtouto }]} markLines={[{ t: 8, label: '8' }, { t: 40, label: '40' }, { t: 45, label: '45' }]} />
+      </div>
+
+      <div className="graph-block">
+        <h3>2人の間のきょりのグラフ</h3>
+        <ValueGraph tMax={T_MAX} yMax={500} valueFn={gap} t={t} yLabel="m" xLabel="(分)" markLines={[{ t: 8, label: '8' }, { t: 40, label: '40' }, { t: 45, label: '45' }]} />
       </div>
 
       <div className="explain">

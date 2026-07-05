@@ -1,7 +1,14 @@
+import { useState } from 'react'
 import { DicePicker } from '../components/DicePicker'
 import { GridPathDiagram } from '../components/GridPathDiagram'
 
+const AB_ROUTES = ['道1', '道2']
+const BC_ROUTES = ['道1', '道2', '道3', '道4']
+
 export default function Basic1() {
+  const [ab, setAb] = useState(null)
+  const [bc, setBc] = useState(null)
+
   return (
     <div className="problem">
       <h2>基本問題1　和分解・道順・積の法則いろいろ</h2>
@@ -24,6 +31,17 @@ export default function Basic1() {
 
       <h3>(2) Ａ地点からＢ地点までの道順</h3>
       <GridPathDiagram cols={3} rows={3} startLabel="A" endLabel="B" />
+
+      <h3>(4) Ａ地点からＢ地点を通ってＣ地点まで（ＡＢ間2本，ＢＣ間4本）</h3>
+      <p style={{ fontWeight: 'bold', marginBottom: 4 }}>ＡＢ間の道を選ぶ</p>
+      <div className="combo-items">
+        {AB_ROUTES.map((r) => <button key={r} className={`combo-item${ab === r ? ' active' : ''}`} onClick={() => setAb(r)}>{r}</button>)}
+      </div>
+      <p style={{ fontWeight: 'bold', margin: '10px 0 4px' }}>ＢＣ間の道を選ぶ</p>
+      <div className="combo-items">
+        {BC_ROUTES.map((r) => <button key={r} className={`combo-item${bc === r ? ' active' : ''}`} onClick={() => setBc(r)}>{r}</button>)}
+      </div>
+      {ab && bc && <p className="combo-message">ルート決定：Ａ→({ab})→Ｂ→({bc})→Ｃ</p>}
 
       <div className="explain">
         <h3>解説</h3>
