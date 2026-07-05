@@ -1,11 +1,12 @@
 import { useState } from 'react'
 
 // 大小2つのさいころの目を選んで、合計や条件を確かめられるウィジェット。
-export function DicePicker({ checkFn, checkLabel }) {
+export function DicePicker({ checkFn, checkLabel, mode = 'sum' }) {
   const [big, setBig] = useState(1)
   const [small, setSmall] = useState(1)
   const sum = big + small
-  const ok = checkFn ? checkFn(sum) : null
+  const product = big * small
+  const ok = checkFn ? checkFn(mode === 'product' ? product : sum, big, small) : null
 
   return (
     <div>
@@ -27,7 +28,10 @@ export function DicePicker({ checkFn, checkLabel }) {
           </div>
         </div>
       </div>
-      <p className="readout">合計：<b>{sum}</b>{checkFn && <span className={ok ? 'combo-message' : ''}>　{checkLabel}：{ok ? '条件を満たす' : '条件を満たさない'}</span>}</p>
+      <p className="readout">
+        合計：<b>{sum}</b>　積：<b>{product}</b>
+        {checkFn && <span className={ok ? 'combo-message' : ''}>　{checkLabel}：{ok ? '条件を満たす' : '条件を満たさない'}</span>}
+      </p>
     </div>
   )
 }
